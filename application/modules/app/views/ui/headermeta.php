@@ -27,3 +27,5 @@
     <link href="<?=base_url();?>assets/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 	<!-- Custom Theme Style -->
     <link href="<?=base_url();?>assets/build/css/custom.min.css" rel="stylesheet">
+	<!-- sweet alert -->
+	<link rel="stylesheet" href="<?=base_url();?>assets/alert/css/sweetalert.css">

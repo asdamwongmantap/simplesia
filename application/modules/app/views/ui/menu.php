@@ -30,17 +30,17 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-				   <li><a href="<?=base_url();?>main/dashboard"><i class="fa fa-home"></i> Dashboard </a></li>
+				   <li><a href="<?=base_url();?>app/main/dashboard"><i class="fa fa-home"></i> Dashboard </a></li>
 				   <h3>Setup</h3>
            <li>
            <a href="#"><i class="fa fa-gear"></i> Data </a>
 				   
 				   <ul class="nav child_menu">
 						<li>
-							<a href="/tes">Jenis Rekening</a>
+							<a href="<?=base_url();?>app/jenis_rek/jenisakun">Jenis Rekening</a>
 						</li>
             <li>
-							<a href="/tes">Perkiraan</a>
+							<a href="<?=base_url();?>app/perkiraan/rekening">Perkiraan</a>
 						</li>
 						</ul>
             </li>
@@ -50,7 +50,7 @@
 				   
 				   <ul class="nav child_menu">
 						<li>
-							<a href="/tes">Jurnal Umum</a>
+							<a href="<?=base_url();?>app/jurnal/umum">Jurnal Umum</a>
 						</li>
             <li>
 							<a href="/tes">Jurnal Kas Keluar</a>

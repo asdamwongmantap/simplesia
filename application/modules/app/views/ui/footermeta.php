@@ -28,3 +28,5 @@
     <script src="<?=base_url();?>assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
 	<!-- Custom Theme Scripts -->
     <script src="<?=base_url();?>assets/build/js/custom.min.js"></script>
+    <!-- sweet alert -->
+    <script src="<?=base_url();?>assets/alert/js/sweetalert.min.js"></script>
