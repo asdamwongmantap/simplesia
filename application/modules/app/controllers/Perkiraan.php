@@ -27,16 +27,17 @@ class Perkiraan extends CI_Controller
 	}
 	public function add_rek()
 	{
-		if ($this->session->userdata('logged_in')){
-			$session_data=$this->session->userdata('logged_in');
-			$data['username'] = $this->session->userdata('username');
-			$this->load ->model('modul_rekening');
-			$data['data']=$this->modul_rekening->viewrek();
-			$this->load->view('admin/rek/add_rekening',$data);
-		}
-		else {
-			redirect('');
-		}
+		if (!$this->session->userdata('username')){
+			redirect(base_url());
+        }else{
+            $generalcode = "SETTING_DASHBOARD";
+		    $data['setting'] = $this->Modul_setting->get_listgeneralsetting($generalcode); //untuk general setting
+			$data['datarekening']=$this->Modul_rekening->viewrek();
+			$data['datajenisrekeningddl']=$this->Modul_jenisrek->viewjenisrek();
+			$data['dataposisiddl']=$this->Modul_jenisrek->viewposisi();
+			// print_r($this->Modul_rekening->viewrek());die;
+            $this->load->view('setup/data/addperkiraan',$data);
+        }
 	}
 	public function saverek(){
 		$this->form_validation->set_rules('kd_akun','Kode Rekening / Akun','required');

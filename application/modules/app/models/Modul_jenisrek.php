@@ -7,13 +7,26 @@
 	{
 		// $this->load->database();
 		$query=$this->db->get('tbl_jenisakun');
-		If ($query->num_rows()>0)
+		if ($query->num_rows()>0)
 	{
-		Return $query->result();
+		return $query->result();
 	}
-		Else
+		else
 	{
-		Return array();
+		return array();
+	}
+	}
+	Function viewposisi()
+	{
+		// $this->load->database();
+		$query=$this->db->get('tbl_posisi');
+		if ($query->num_rows()>0)
+	{
+		return $query->result();
+	}
+		else
+	{
+		return array();
 	}
 	}
 	Function get_insertjnsrek($data){
@@ -25,13 +38,13 @@
 	{
 		 $this->db->where('kd_jenisakun',$id); 
          $query = $this->db->get('tbl_jenisakun'); 
-                If ($query->num_rows()>0)
+                if ($query->num_rows()>0)
 	{
-		Return $query->result();
+		return $query->result();
 	}
-		Else
+		else
 	{
-		Return null;
+		return null;
 	} 
 	}
 	Function moduleditjnsrek() { 

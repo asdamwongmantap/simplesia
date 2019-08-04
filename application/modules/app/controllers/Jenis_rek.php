@@ -55,58 +55,38 @@ class Jenis_rek extends CI_Controller
     }
 	public function editjenis($id)
 	{
-		if ($this->session->userdata('logged_in')){
-			$session_data=$this->session->userdata('logged_in');
-		$data['username'] = $this->session->userdata('username');
-		$this->load ->model('modul_jenisrek');
-		$data['data']=$this->modul_jenisrek->get_editjnsrek($id);
-		$this->load->view('admin/jenisrek/edit_jenis',$data);
-		}
-		else {
-			redirect('');
-		}
+		
+		if (!$this->session->userdata('username')){
+			redirect(base_url());
+        }else{
+            $generalcode = "SETTING_DASHBOARD";
+		    $data['setting'] = $this->Modul_setting->get_listgeneralsetting($generalcode); //untuk general setting
+			$data['dataeditjenis']=$this->Modul_jenisrek->get_editjnsrek($id);
+			// print_r($this->Modul_jenisrek->get_editjnsrek($id));die;
+            $this->load->view('setup/data/editjenisrek',$data);
+        }
+
 	}
-	function proseseditjnsrek() { 
+	function saveeditjnsrek() { 
 		$this->form_validation->set_rules('kd_jenisakun','Kode Jenis Akun','required');
 		$this->form_validation->set_rules('desc_jenisakun','Deskripsi Jenis Akun','required');
 		if($this->form_validation->run()!=FALSE){
-                //pesan yang muncul jika berhasil diupload pada session flashdata
-		$this->load->model('modul_jenisrek','',TRUE); 
-            $this->modul_jenisrek->moduleditjnsrek(); 
-             $this->session->set_flashdata('pesan','
-			 	<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  Data Berhasil Di Update
-				</div>
-			 	');
-				redirect('jnsrek/jenisakun'); //jika berhasil maka akan ditampilkan view matakuliah
+            $this->Modul_jenisrek->moduleditjnsrek(); 
+             echo "berhasil";
 			}else{
-               $this->session->set_flashdata('pesan','
-			 	<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  Data Berhasil Di Update
-				</div>
-			 	');
-				redirect('../kls/kelas'); //jika berhasil maka akan ditampilkan view matakuliah
+				echo "error";
 			}
         }
 	public function hapusjenis($id)
 	{
 	    
 		$data['username'] = $this->session->userdata('username');
-		$this->load ->model('modul_jenisrek','', TRUE);
-		$data['data']=$this->modul_jenisrek->hapus_jnsrek($id);
+		$id = $this->input->get("kdjenisrek");
+		$data['data']=$this->Modul_jenisrek->hapus_jnsrek($id);
 		if ($res <= 1) {
-            	 $this->session->set_flashdata('pesan','
-				<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  Data Berhasil Di Hapus
-				</div>
-
-            	 	');
-            	 redirect('jnsrek/jenisakun');
+            	 echo "berhasil";
             }
-		$this->load->view('admin/jenisrek/list_jenis', $data);
+		
 	}
 	
 }

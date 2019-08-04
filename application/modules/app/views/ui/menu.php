@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border:0px solid black;">
-              <center><a href="#" class="site_title"><img src="<?=base_url();?>assets/images/logowmsia.png" style="height:100%;width:30%;margin-bottom:7px;margin-top:1px"></a>
+              <a href="#" class="site_title">WM-Account System</a>
             </div>
 
             <div class="clearfix"></div>

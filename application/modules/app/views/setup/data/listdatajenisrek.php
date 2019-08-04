@@ -58,7 +58,7 @@
 									<td> <?=$row->desc_jenisakun;?></td>
 									<td><a class="btn btn-success" href='detailjenis/<?=$row->kd_jenisakun;?>'><i class="glyphicon glyphicon-zoom-in icon-white"></i></a>
 									<a class="btn btn-primary" href='editjenis/<?=$row->kd_jenisakun;?>'><i class="glyphicon glyphicon-edit icon-white"></i></a>
-									<a class="btn btn-danger" href='hapusjenis/<?=$row->kd_jenisakun;?>'><i class="glyphicon glyphicon-trash icon-white"></i></a></td>
+									<a class="btn btn-danger item_deletejenisrek" data-id="<?=$row->kd_jenisakun;?>"><i class="glyphicon glyphicon-trash icon-white"></i></a></td>
 								</tr>
 							<?php
 								}
@@ -81,7 +81,61 @@
 		<!-- Parsley -->
 		<script src="<?=base_url();?>assets/vendors/parsleyjs/dist/parsley.min.js"></script>
 		<script type="text/javascript">
-		
+			//prosesdelete
+			$(document).on('click','.item_deletejenisrek',function(e) {
+			var kdjenisrek = $(this).data('id');
+			
+			swal({
+			  title: "Delete Data",
+			  text: "Apakah anda yakin ingin menghapus data ini ?",
+			  confirmButtonText:"Yakin",
+			  confirmButtonColor: "#002855",
+			  cancelButtonText:"Tidak",
+			  showCancelButton: true,
+			  closeOnConfirm: false,
+			  type:"warning",
+			  animation: "slide-from-top",
+			  header: "Test Header",
+			  showLoaderOnConfirm: true
+			}, function () {
+				$.ajax({
+					url:'<?=base_url('app/jenis_rek/hapusjenis');?>',
+					dataType:'text',
+					data : {kdjenisrek:kdjenisrek},
+					success:function(e){
+						if (e !== "error") {
+						swal({
+						  title: "Success",
+						  confirmButtonColor: "#002855",
+						  text: "Data berhasil disimpan !.",
+						  type: "success"
+						},function(){
+							window.location='<?=base_url('app/jenis_rek/jenisakun');?>';
+						  });
+						}
+						else{
+						swal({
+						  title: "Failed",
+						  confirmButtonColor: "#002855",
+						  text: e+"1",
+						  type: "error"
+						});
+						}
+					},
+					error:function(xhr, ajaxOptions, thrownError){
+						swal({
+						  title: "Failed",
+						  confirmButtonColor: "#002855",
+						  text: e+"1",
+						  type: "error"
+						});
+					}
+					
+				});
+				return false;
+			});
+			e.preventDefault(); 
+		  });
 		</script>
   </body>
 </html>
