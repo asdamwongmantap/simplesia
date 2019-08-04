@@ -37,26 +37,26 @@
 			return null;
 		} 
 		}
-		Function moduleditrek() { 
+		Function moduleditrek($data,$id) { 
 			
-			$id = $this->input->post('kd_akun'); 
-			$data = array(
-					  'kd_akun' =>$this->input->post('kd_akun'),
-					  'desc_akun' =>$this->input->post('desc_akun'),
-					  'kd_jenisakun' =>$this->input->post('kd_jenisakun')
-					  );
+			// $id = $this->input->post('kd_akun'); 
+			// $data = array(
+			// 		  'kd_akun' =>$this->input->post('kd_akun'),
+			// 		  'desc_akun' =>$this->input->post('desc_akun'),
+			// 		  'kd_jenisakun' =>$this->input->post('kd_jenisakun')
+			// 		  );
 			$this->db->where('kd_akun',$id); 
 			$this->db->update('tbl_akun',$data); 
 		}
-		Function moduleditrek2() { 
+		Function moduleditrek2($data2,$id) { 
 			
-			$id = $this->input->post('kd_akun'); 
-			$data2 = array(
-					  'kd_akun' =>$this->input->post('kd_akun'),
-					  'tgl_awal' =>$this->input->post('tgl_awal'),
-					  'posisi' =>$this->input->post('posisi'),
-					  'saldo_awal_debet' =>$this->input->post('saldo_awal_debet'),
-					  'saldo_awal_kredit' =>$this->input->post('saldo_awal_kredit'));
+			// $id = $this->input->post('kd_akun'); 
+			// $data2 = array(
+			// 		  'kd_akun' =>$this->input->post('kd_akun'),
+			// 		  'tgl_awal' =>$this->input->post('tgl_awal'),
+			// 		  'posisi' =>$this->input->post('posisi'),
+			// 		  'saldo_awal_debet' =>$this->input->post('saldo_awal_debet'),
+			// 		  'saldo_awal_kredit' =>$this->input->post('saldo_awal_kredit'));
 			$this->db->where('kd_akun',$id); 
 			$this->db->update('tbl_perkiraan',$data2); 
 		}

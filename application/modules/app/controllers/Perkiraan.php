@@ -43,89 +43,111 @@ class Perkiraan extends CI_Controller
 		$this->form_validation->set_rules('kd_akun','Kode Rekening / Akun','required');
 		$this->form_validation->set_rules('desc_akun','Deskripsi Rekening / Akun','required');
 		$this->form_validation->set_rules('kd_jenisakun','Deskripsi Jenis Akun','required');
+		$explodejenisakun = explode(":",$this->input->post('kd_jenisakun'));
+		$kdjenisakun = $explodejenisakun[0];
+		if (!$this->input->post('tgl_awal')){
+			$tglawal = Date("Y-m-d");
+		}else{
+			$tglawal = $this->input->post('tgl_awal');
+		}
 		$data = array(
 				  'kd_akun' =>$this->input->post('kd_akun'),
 				  'desc_akun' =>$this->input->post('desc_akun'),
-				  'kd_jenisakun' =>$this->input->post('kd_jenisakun')
+				  'kd_jenisakun' =>$kdjenisakun
 				  );
 		$data2 = array(
 				  'kd_akun' =>$this->input->post('kd_akun'),
-				  'tgl_awal' =>$this->input->post('tgl_awal'),
+				  'tgl_awal' =>$tglawal,
 				  'posisi' =>$this->input->post('posisi'),
 				  'saldo_awal_debet' =>$this->input->post('saldo_awal_debet'),
 				  'saldo_awal_kredit' =>$this->input->post('saldo_awal_kredit')
 				  );
 		if($this->form_validation->run()!=FALSE){
                 //pesan yang muncul jika berhasil diupload pada session flashdata
-				$this->load->model('modul_rekening');
-				$this->modul_rekening->get_insertrek($data); //akses model untuk menyimpan ke database
-                $this->modul_rekening->get_insertrek2($data2);
-				$this->session->set_flashdata("pesan", "<div class=\"col-md-12\"><div class=\"alert alert-success\" id=\"alert\"><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data " .$this->input->post('desc_akun'). " Berhasil Disimpan!!</div></div>");
-                redirect('rek/rekening'); //jika berhasil maka akan ditampilkan view jenisrekening
+				$this->Modul_rekening->get_insertrek($data); //akses model untuk menyimpan ke database
+                $this->Modul_rekening->get_insertrek2($data2);
+				echo "berhasil";
 			}else{
                 //pesan yang muncul jika terdapat error dimasukkan pada session flashdata
-                $this->session->set_flashdata("pesan", "<div class=\"col-md-12\"><div class=\"alert alert-danger\" id=\"alert\"><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data " .$this->input->post('desc_akun'). " Gagal Disimpan!!</div></div>");
-                redirect('rek/add_rek'); //jika gagal maka akan ditampilkan form tambah mk
+                echo "error";
 	}         
     }
 	
 	public function editrek($id)
 	{
-		if ($this->session->userdata('logged_in')){
-			$session_data=$this->session->userdata('logged_in');
-		$data['username'] = $this->session->userdata('username');
-		$this->load ->model('modul_rekening');
-		$data['data']=$this->modul_rekening->get_editrek($id);
-		$this->load->view('admin/rek/edit_rekening',$data);
+		
+		if (!$this->session->userdata('username')){
+			redirect(base_url());
+        }else{
+            $generalcode = "SETTING_DASHBOARD";
+		    $data['setting'] = $this->Modul_setting->get_listgeneralsetting($generalcode); //untuk general setting
+			$data['dataeditrekening']=$this->Modul_rekening->get_editrek($id);
+			$data['datajenisrekeningddl']=$this->Modul_jenisrek->viewjenisrek();
+			$data['dataposisiddl']=$this->Modul_jenisrek->viewposisi();
+			// print_r($this->Modul_rekening->viewrek());die;
+            $this->load->view('setup/data/editperkiraan',$data);
 		}
-		else {
-			redirect('');
-		}
+		
 	}
 	function proseseditrek() { 
 		$this->form_validation->set_rules('kd_akun','Kode Rekening / Akun','required');
 		$this->form_validation->set_rules('desc_akun','Deskripsi Rekening / Akun','required');
 		$this->form_validation->set_rules('kd_jenisakun','Deskripsi Jenis Akun','required');
+		$explodejenisakun = explode(":",$this->input->post('kd_jenisakun'));
+		$kdjenisakun = $explodejenisakun[0];
+		if (!$this->input->post('tgl_awal')){
+			$tglawal = Date("Y-m-d");
+		}else{
+			$tglawal = $this->input->post('tgl_awal');
+		}
+		$id = $this->input->post('kd_akun'); 
+		$data = array(
+					'kd_akun' =>$this->input->post('kd_akun'),
+					'desc_akun' =>$this->input->post('desc_akun'),
+					'kd_jenisakun' =>$kdjenisakun
+					);
+		$data2 = array(
+					'kd_akun' =>$this->input->post('kd_akun'),
+					'tgl_awal' =>$tglawal,
+					'posisi' =>$this->input->post('posisi'),
+					'saldo_awal_debet' =>$this->input->post('saldo_awal_debet'),
+					'saldo_awal_kredit' =>$this->input->post('saldo_awal_kredit'));
 		if($this->form_validation->run()!=FALSE){
                 //pesan yang muncul jika berhasil diupload pada session flashdata
-		$this->load->model('modul_rekening','',TRUE); 
-            $this->modul_rekening->moduleditrek(); 
-			$this->modul_rekening->moduleditrek2(); 
-             $this->session->set_flashdata('pesan','
-			 	<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  Data Berhasil Di Update
-				</div>
-			 	');
-				redirect('rek/rekening'); //jika berhasil maka akan ditampilkan view matakuliah
+			$this->Modul_rekening->moduleditrek($data,$id); 
+			$this->Modul_rekening->moduleditrek2($data2,$id); 
+            echo "berhasil";
 			}else{
-               $this->session->set_flashdata('pesan','
-			 	<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  Data Berhasil Di Update
-				</div>
-			 	');
-				redirect('rek/rekening'); //jika berhasil maka akan ditampilkan view matakuliah
+				echo "error";
 			}
         }
 	public function hapusrek($id)
 	{
 	    
 		$data['username'] = $this->session->userdata('username');
-		$this->load ->model('modul_rekening','', TRUE);
-		$data['data']=$this->modul_rekening->hapus_rek($id);
-		$data['data']=$this->modul_rekening->hapus_rek2($id);
+		$id = $this->input->get("kdakun");
+		$data['data']=$this->Modul_rekening->hapus_rek($id);
+		$data['data']=$this->Modul_rekening->hapus_rek2($id);
 		if ($res <= 1) {
-            	 $this->session->set_flashdata('pesan','
-				<div class="alert alert-success alert-dismissible" role="alert">
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				  Data Berhasil Di Hapus
-				</div>
-
-            	 	');
-            	 redirect('rek/rekening');
+            	echo "berhasil";
             }
-		$this->load->view('admin/rek/list_rekening', $data);
+		
+	}
+	public function detailrek($id)
+	{
+		
+		if (!$this->session->userdata('username')){
+			redirect(base_url());
+        }else{
+            $generalcode = "SETTING_DASHBOARD";
+		    $data['setting'] = $this->Modul_setting->get_listgeneralsetting($generalcode); //untuk general setting
+			$data['dataeditrekening']=$this->Modul_rekening->get_editrek($id);
+			$data['datajenisrekeningddl']=$this->Modul_jenisrek->viewjenisrek();
+			$data['dataposisiddl']=$this->Modul_jenisrek->viewposisi();
+			// print_r($this->Modul_rekening->viewrek());die;
+            $this->load->view('setup/data/detailperkiraan',$data);
+		}
+		
 	}
 	
 }

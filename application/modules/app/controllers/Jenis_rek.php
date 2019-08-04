@@ -88,6 +88,20 @@ class Jenis_rek extends CI_Controller
             }
 		
 	}
+	public function detailjenis($id)
+	{
+		
+		if (!$this->session->userdata('username')){
+			redirect(base_url());
+        }else{
+            $generalcode = "SETTING_DASHBOARD";
+		    $data['setting'] = $this->Modul_setting->get_listgeneralsetting($generalcode); //untuk general setting
+			$data['dataeditjenis']=$this->Modul_jenisrek->get_editjnsrek($id);
+			// print_r($this->Modul_jenisrek->get_editjnsrek($id));die;
+            $this->load->view('setup/data/detailjenisrek',$data);
+        }
+
+	}
 	
 }
 
