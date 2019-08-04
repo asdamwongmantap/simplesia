@@ -30,3 +30,13 @@
     <script src="<?=base_url();?>assets/build/js/custom.min.js"></script>
     <!-- sweet alert -->
     <script src="<?=base_url();?>assets/alert/js/sweetalert.min.js"></script>
+    <!-- Datatables -->
+<script src="<?=base_url();?>assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="<?=base_url();?>assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>

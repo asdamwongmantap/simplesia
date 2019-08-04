@@ -3,7 +3,10 @@
 		
 	var $tbl_jurnalh='tbl_jurnalumumh';
 	var $tbl_jurnald='tbl_jurnalumumd';
+	var $tbl_jurnalkkh='tbl_jurnalkkh';
+	var $tbl_jurnalkkd='tbl_jurnalkkd';
 	var $view_jurnalumum='view_jurnalumum';
+	var $view_jurnalkk='view_jurnalkk';
 	
 	Function viewjurnalumum()
 	{
@@ -77,6 +80,44 @@
 			$this->db->delete('tbl_jurnalumumd', array('no_transaksi' => $id));
 
 		}
+
+		Function viewjurnalkk()
+	{
+		$query=$this->db->get('view_jurnalkk');
+		if ($query->num_rows()>0)
+	{
+		return $query->result();
+	}
+		else
+	{
+		return array();
+	}
+	}
+
+	Function get_insertjurnalkk($data){
+		$this->db->insert($this->tbl_jurnalkkh, $data);
+		return TRUE;
+	 }
+	 Function get_insertjurnalkk2($data2){
+		$this->db->insert($this->tbl_jurnalkkd, $data2);
+		return TRUE;
+	 }
+	 public function hapus_jurnalkk($id){ 
+			
+		$this->db->where('no_transaksikk',$id);
+		$query = $this->db->get('tbl_jurnalkkh');
+		$row = $query->row();
+		$this->db->delete('tbl_jurnalkkh', array('no_transaksikk' => $id));
+
+	}
+public function hapus_jurnalkk2($id){ 
+		
+		$this->db->where('no_transaksikk',$id);
+		$query = $this->db->get('tbl_jurnalkkd');
+		$row = $query->row();
+		$this->db->delete('tbl_jurnalkkd', array('no_transaksikk' => $id));
+
+	}
 	
 	
 }

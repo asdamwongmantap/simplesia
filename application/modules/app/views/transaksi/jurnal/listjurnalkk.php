@@ -32,42 +32,38 @@
               <div class="col-md-12 col-sm-4 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>List Perkiraan</h2>
+                    <h2>List Jurnal Umum</h2>
                     <div class="clearfix"></div>
 					
                   </div>
                   <div class="x_content">
 				  <input type="hidden" id="usergroup" value="<?=$this->session->userdata('usergroupid');?>">
-				  <a href="<?=base_url('app/perkiraan/add_rek');?>" class="btn btn-success" title="Tambah user group" data-target=".bs-example-modal-smadd" style="float:right;display:block;" 
-				  id="tomboltambah"><i class="fa fa-plus"></i> Tambah Data Perkiraan</a></br>
+				  <a href="<?=base_url('app/jurnal/add_jurnalkk');?>" class="btn btn-success" title="Tambah user group" data-target=".bs-example-modal-smadd" style="float:right;display:block;" 
+				  id="tomboltambah"><i class="fa fa-plus"></i> Input Jurnal Kas Keluar</a></br>
 				  </br>
 				  <table id="mydata" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
                         <tr>
-							<th>Kode Rekening</th>
-							<th>Deskripsi Rekening</th>
-							<th>Jenis Rekening</th>
+							<th>No. Transaksi</th>
 							<th>Tanggal</th>
-							<th>Posisi</th>
-							<th>Debit Awal</th>
-							<th>Kredit Awal</th>
+							<th>Deskripsi Rekening</th>
+							<th>Keterangan</th>
+							<th>Debet</th>
+							<th>Status</th>
 							<th>Action</th>
                         </tr>
                       </thead>
                       <tbody id="show_data">
 					  <?php 
-							foreach ($datarekening as $row) {?>	 
+							foreach ($datajurnalkk as $row) {?>	 
 							<tr>
-							<td> <?=$row->kd_akun;?></td>							
+							<td> <?=$row->no_transaksikk;?></td>							
+									<td> <?=$row->tgl_transaksikk;?></td>
 									<td> <?=$row->desc_akun;?></td>
-									<td> <?=$row->desc_jenisakun;?></td>
-									<td> <?=$row->tgl_awal;?></td>							
-									<td> <?=$row->posisi;?></td>
-									<td> <?=number_format($row->saldo_awal_debet,0,",",".");?></td>
-									<td> <?=number_format($row->saldo_awal_kredit,0,",",".");?></td>
-									<td><a class="btn btn-success" href='detailrek/<?=$row->kd_akun;?>'><i class="glyphicon glyphicon-zoom-in icon-white"></i></a>
-									<a class="btn btn-primary" href='editrek/<?=$row->kd_akun;?>'><i class="glyphicon glyphicon-edit icon-white"></i></a>
-									<a class="btn btn-danger item_deleteakun" data-id="<?=$row->kd_akun;?>"><i class="glyphicon glyphicon-trash icon-white"></i></a></td>
+									<td> <?=$row->keterangan;?></td>							
+									<td> <?=$row->debet;?></td>
+									<td> <?=$row->status_postkk;?></td>
+									<td><a class="btn btn-danger item_deletejurnalkk" data-id="<?=$row->no_transaksikk;?>"><i class="glyphicon glyphicon-trash icon-white"></i></a></td>
 								</tr>
 							<?php
 								}
@@ -93,9 +89,9 @@
 		$(document).ready(function(){
 		$('#mydata').dataTable();
 		});
-			//prosesdelete
-			$(document).on('click','.item_deleteakun',function(e) {
-			var kdakun = $(this).data('id');
+		//prosesdelete
+		$(document).on('click','.item_deletejurnalkk',function(e) {
+			var notransaksikk = $(this).data('id');
 			
 			swal({
 			  title: "Delete Data",
@@ -111,9 +107,9 @@
 			  showLoaderOnConfirm: true
 			}, function () {
 				$.ajax({
-					url:'<?=base_url('app/perkiraan/hapusrek');?>',
+					url:'<?=base_url('app/jurnal/hapusjurnalkk');?>',
 					dataType:'text',
-					data : {kdakun:kdakun},
+					data : {notransaksikk:notransaksikk},
 					success:function(e){
 						if (e !== "error") {
 						swal({
@@ -122,7 +118,7 @@
 						  text: "Data berhasil disimpan !.",
 						  type: "success"
 						},function(){
-							window.location='<?=base_url('app/perkiraan/rekening');?>';
+							window.location='<?=base_url('app/jurnal/kaskeluar');?>';
 						  });
 						}
 						else{

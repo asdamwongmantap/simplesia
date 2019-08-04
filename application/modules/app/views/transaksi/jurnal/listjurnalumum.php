@@ -38,8 +38,8 @@
                   </div>
                   <div class="x_content">
 				  <input type="hidden" id="usergroup" value="<?=$this->session->userdata('usergroupid');?>">
-				  <a href="<?=base_url('app/jenis_rek/add_jnsrek');?>" class="btn btn-success" title="Tambah user group" data-target=".bs-example-modal-smadd" style="float:right;display:block;" 
-				  id="tomboltambah"><i class="fa fa-plus"></i> Tambah Data Perkiraan</a></br>
+				  <a href="<?=base_url('app/jurnal/add_jurnalumum');?>" class="btn btn-success" title="Tambah user group" data-target=".bs-example-modal-smadd" style="float:right;display:block;" 
+				  id="tomboltambah"><i class="fa fa-plus"></i> Input Jurnal Umum</a></br>
 				  </br>
 				  <table id="mydata" class="table table-striped table-bordered dt-responsive wrap" cellspacing="0" width="100%">
                       <thead>
@@ -65,9 +65,7 @@
 									<td> <?=$row->debet;?></td>
 									<td> <?=$row->kredit;?></td>
 									<td> <?=$row->status_post;?></td>
-									<td><a class="btn btn-success" href='detailjurnalumum/<?=$row->no_transaksi;?>'><i class="glyphicon glyphicon-zoom-in icon-white"></i></a>
-									<a class="btn btn-primary" href='editjurnalumum/<?=$row->no_transaksi;?>'><i class="glyphicon glyphicon-edit icon-white"></i></a>
-									<a class="btn btn-danger" href='hapusjurnalumum/<?=$row->no_transaksi;?>'><i class="glyphicon glyphicon-trash icon-white"></i></a></td>
+									<td><a class="btn btn-danger item_deletejurnal" data-id="<?=$row->no_transaksi;?>"><i class="glyphicon glyphicon-trash icon-white"></i></a></td>
 								</tr>
 							<?php
 								}
@@ -90,7 +88,64 @@
 		<!-- Parsley -->
 		<script src="<?=base_url();?>assets/vendors/parsleyjs/dist/parsley.min.js"></script>
 		<script type="text/javascript">
-		
+		$(document).ready(function(){
+		$('#mydata').dataTable();
+		});
+			//prosesdelete
+			$(document).on('click','.item_deletejurnal',function(e) {
+			var notransaksi = $(this).data('id');
+			
+			swal({
+			  title: "Delete Data",
+			  text: "Apakah anda yakin ingin menghapus data ini ?",
+			  confirmButtonText:"Yakin",
+			  confirmButtonColor: "#002855",
+			  cancelButtonText:"Tidak",
+			  showCancelButton: true,
+			  closeOnConfirm: false,
+			  type:"warning",
+			  animation: "slide-from-top",
+			  header: "Test Header",
+			  showLoaderOnConfirm: true
+			}, function () {
+				$.ajax({
+					url:'<?=base_url('app/jurnal/hapusjurnalumum');?>',
+					dataType:'text',
+					data : {notransaksi:notransaksi},
+					success:function(e){
+						if (e !== "error") {
+						swal({
+						  title: "Success",
+						  confirmButtonColor: "#002855",
+						  text: "Data berhasil disimpan !.",
+						  type: "success"
+						},function(){
+							window.location='<?=base_url('app/jurnal/umum');?>';
+						  });
+						}
+						else{
+						swal({
+						  title: "Failed",
+						  confirmButtonColor: "#002855",
+						  text: e+"1",
+						  type: "error"
+						});
+						}
+					},
+					error:function(xhr, ajaxOptions, thrownError){
+						swal({
+						  title: "Failed",
+						  confirmButtonColor: "#002855",
+						  text: e+"1",
+						  type: "error"
+						});
+					}
+					
+				});
+				return false;
+			});
+			e.preventDefault(); 
+		  });
 		</script>
   </body>
 </html>

@@ -81,6 +81,9 @@
 		<!-- Parsley -->
 		<script src="<?=base_url();?>assets/vendors/parsleyjs/dist/parsley.min.js"></script>
 		<script type="text/javascript">
+		$(document).ready(function(){
+		$('#mydata').dataTable();
+		});
 			//prosesdelete
 			$(document).on('click','.item_deletejenisrek',function(e) {
 			var kdjenisrek = $(this).data('id');

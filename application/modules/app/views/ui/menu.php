@@ -53,7 +53,7 @@
 							<a href="<?=base_url();?>app/jurnal/umum">Jurnal Umum</a>
 						</li>
             <li>
-							<a href="/tes">Jurnal Kas Keluar</a>
+							<a href="<?=base_url();?>app/jurnal/kaskeluar">Jurnal Kas Keluar</a>
 						</li>
 						</ul>
             </li>
