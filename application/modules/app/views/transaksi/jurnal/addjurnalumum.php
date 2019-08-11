@@ -7,7 +7,77 @@
 		?>
 	
   </head>
+  <script>
+  function jumlah(){
+	var awal = 1;
+ //asli ++;
+ //document.getElementById('jumlah').value = asli ++;
+ //aslitextbox ++
+  var cost1 = document.getElementsByName('jumlah[]');
+  
+ for (var i = 0; i < cost1.length; i++)
+    {
+		sum1 = parseFloat(cost1[i].value);
+		cost1[i].value = awal++;
+	}
+ 
+}
+function jumlahkrg(){
 
+ var jmlhtxt = document.getElementById('jumlahtextbox').value;
+ var jmlhtxtbox = jmlhtxt - 1;
+
+ document.getElementById('jumlahtextbox').value = jmlhtxtbox;
+}
+	function GetDynamicTextBoxawal(value) {
+	return '<td>&nbsp</td>'+
+	'<td style="width:51%;border:0px solid black;">'+
+	'<select class="form-control" style="border:1px solid grey;" id="kd_akun" name="kd_akun[]" onchange="freetextlain();">'+
+	'<option value=->-</option><?php foreach ($datarekeningddl as $row) {?>	<option value="<?=$row->kd_akun;?>"><?=$row->desc_akun;?></option><?php }?></select>'+
+	'<td style="width:15%;"><input type="text" style="border:1px solid grey;width:100%;height:35px;" id="keterangan" name="keterangan[]" onkeyup="tambahtarget();" onkeypress="return hanyaAngka(event)" value="">'+
+	'<td style="width:15%;"><input type="text" style="border:1px solid grey;width:100%;height:35px;" id="debet" name="debet[]" onkeyup="tambahbobot();" onkeypress="return hanyaAngka(event)" onchange="bobotkosong();" value="1"></td>'+
+	'<td style="width:15%;"><input type="text" style="border:1px solid grey;width:100%;height:35px;" id="kredit" name="kredit[]" onkeyup="tambahbobot();" onkeypress="return hanyaAngka(event)" onchange="bobotkosong();" value="1"></td><p></p>';
+    //return '<td colspan="6">&nbsp;</td>';      
+}
+function GetDynamicTextBox(value) {
+    return '<td><input type="button" value="-" class="remove btn btn-danger" style="margin-left:1px;"/></td>'+
+	'<td >&nbsp</td><td style="width:51%;">'+
+	'<select class="form-control" style="border:1px solid grey;" id="kd_akun" name="kd_akun[]" onchange="freetextlain();">'+
+	'<option value=->-</option><?php foreach ($datarekeningddl as $row) {?>	<option value="<?=$row->kd_akun;?>"><?=$row->desc_akun;?></option><?php }?></select>'+
+	'<td style="width:15%;"><input type="text" style="border:1px solid grey;width:100%;height:35px;" id="keterangan" name="keterangan[]" onkeyup="tambahtarget();" onkeypress="return hanyaAngka(event)" value="">'+
+	'<td style="width:15%;"><input type="text" style="border:1px solid grey;width:100%;height:35px;" id="debet" name="debet[]" onkeyup="tambahbobot();" onkeypress="return hanyaAngka(event)" onchange="bobotkosong();" value="1";></td>'+
+	'<td style="width:15%;"><input type="text" style="border:1px solid grey;width:100%;height:35px;" id="kredit" name="kredit[]" onkeyup="tambahbobot();" onkeypress="return hanyaAngka(event)" onchange="bobotkosong();" value="1";></td>';
+}
+	$(document).ready(function(){
+	
+		var div = $("<div />");
+        div.html(GetDynamicTextBoxawal(""));
+        $("#TextBoxContainer").append(div);
+		
+    $("#btnAdd").bind("click", function () {
+		
+        var div = $("<div />");
+        div.html(GetDynamicTextBox(""));
+        $("#TextBoxContainer").append(div);
+		jumlah();
+		
+    });
+    $("#btnGet").bind("click", function () {
+        var values = "";
+        $("input[id=kd_akun]").each(function () {
+            values += $(this).val() + "\n";
+        });
+		
+        alert(values);
+    });
+    $("body").on("click", ".remove", function () {
+        $(this).closest("div").remove();
+		jumlahkrg();
+    });
+	
+	
+});	
+  </script>
   <body class="nav-md" progress_bar="true">
   
     <div class="container body">
@@ -39,8 +109,8 @@
                   <div class="x_content">
 				  <form id="form-jurnalumum" data-parsley-validate class="form-horizontal form-label-left" method="post">
 					   <input type="hidden" id="CRTUSR" name="CRTUSR" class="form-control col-md-7 col-xs-12" value="<?=$this->session->userdata('userid');?>">
-					   <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_transaksi">No. Transaksi 
+					   <div class="form-group" >
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="no_transaksi" style="float:left;">No. Transaksi 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                           <input type="text" id="no_transaksi" name="no_transaksi" required="" 
@@ -56,7 +126,7 @@
                         </div>
                       </div>
 					 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="kd_akun">Nama Rekening
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -67,8 +137,8 @@
 						<?php }?>
 						</select>
                         </div>
-                      </div>
-					  <div class="form-group">
+                      </div> -->
+					  <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="keterangan">Keterangan Transaksi 
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -91,8 +161,8 @@
 						<input type="text" id="kredit" name="kredit" required="" 
 						maxlength="100" class="form-control col-md-7 col-xs-12">
                         </div>
-                      </div>
-					  <div class="form-group">
+                      </div> -->
+					  <!-- <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status_post">Apakah Ingin Di POST ?
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -102,9 +172,44 @@
 						<option value="NOT POST">TIDAK</option>
 						</select>
                         </div>
+                      </div> -->
+					  <div>&nbsp;</div>
+					  <table border="1px solid black;">
+								<tr>
+									<div style="border-bottom:0px solid black;border-top:0px solid black;border-left:0px solid black;border-right:1px solid black;width:4%;float:left;height:33px;"><input id="btnAdd" class="btn btn-info" type="button" value="+" style="margin-top:10px;"/></div>
+									<!-- <div style="border-bottom:0px solid black;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;width:6%;float:left;height:33px;padding-top:15px;text-align:center;">&nbsp;&nbsp;No</div> -->
+								    <div style="border-bottom:0px solid black;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;width:51%;float:left;height:33px;padding-top:15px;text-align:center;">&nbsp;&nbsp;Rekening</div>
+									<div style="border-bottom:0px solid black;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;width:15%;float:left;height:33px;padding-top:15px;text-align:center;">Keterangan</div>
+									<div style="border-bottom:0px solid black;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;width:15%;float:left;height:33px;padding-top:15px;text-align:center;">Debit</div>
+									<div style="border-bottom:0px solid black;border-top:1px solid black;border-left:1px solid black;border-right:1px solid black;width:15%;float:left;height:33px;padding-top:15px;text-align:center;">Kredit</div>
+								</tr>
+								<tr>
+									<div style="border-bottom:0px solid black;border-top:0px solid black;border-left:0px solid black;border-right:1px solid black;width:4%;float:left;">&nbsp;</div>
+								    <!-- <div style="border-bottom:1px solid black;border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;width:6%;float:left;">&nbsp;</div> -->
+									<div style="border-bottom:1px solid black;border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;width:51%;float:left;">&nbsp;</div>
+									<div style="border-bottom:1px solid black;border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;width:15%;float:left;">&nbsp;</div>
+									<div style="border-bottom:1px solid black;border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;width:15%;float:left;">&nbsp;</div>
+									<div style="border-bottom:1px solid black;border-top:0px solid black;border-left:1px solid black;border-right:1px solid black;width:15%;float:left;">&nbsp;</div>
+								</tr>
+								<tr>
+									<div id="TextBoxContainer"></div>
+								</tr>
+							</table>
+							<div>&nbsp;</div>
+							<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="status_post">Apakah Ingin Di POST ?
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12" >
+						<select class="form-control"  name="status_post">
+						<option value="">--Pilih Jawaban--</option>
+						<option value="POST">YA</option>
+						<option value="NOT POST">TIDAK</option>
+						</select>
+                        </div>
                       </div>
+					  <div>&nbsp;</div>
 					  <div class="form-group">
-                        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                        <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3" >
                           <button type="submit" class="btn btn-primary" id="savebtn">Simpan</button>
 						  
                         </div>

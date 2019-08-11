@@ -23,7 +23,7 @@
     <!-- Select2 -->
     <script src="<?=base_url();?>assets/vendors/select2/dist/js/select2.full.min.js"></script>
     <!-- Parsley -->
-    <script src="<?=base_url();?>assets/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- <script src="<?=base_url();?>assets/vendors/parsleyjs/dist/parsley.min.js"></script> -->
 	<!-- jQuery autocomplete -->
     <script src="<?=base_url();?>assets/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
 	<!-- Custom Theme Scripts -->
